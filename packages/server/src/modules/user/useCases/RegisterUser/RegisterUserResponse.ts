@@ -4,8 +4,6 @@ import * as RegisterUserErrors from './RegisterUserErrors';
 import { UnexpectedError } from '../../../../shared/logic/UnexpectedError';
 
 export type RegisterUserResponse = Either<
-  | RegisterUserErrors.EmailAlreadyExistsError
-  | UnexpectedError
-  | Result<unknown>,
+  RegisterUserErrors.EmailAlreadyExistsError | UnexpectedError,
   Result<void>
 >;

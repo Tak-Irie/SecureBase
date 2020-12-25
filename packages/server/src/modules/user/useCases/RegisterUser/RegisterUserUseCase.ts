@@ -10,7 +10,6 @@ import { UserRepository } from '../../domain/UserRepository';
 import * as RegisterUserErrors from './RegisterUserErrors';
 import { RegisterUserResponse } from './RegisterUserResponse';
 
-type UserTypes = UserName | UserEmail | UserPassword;
 type RegisterUserDTO = {
   username: string;
   email: string;
@@ -28,23 +27,24 @@ export class RegisterUserUseCase
   ): Promise<RegisterUserResponse> {
     const emailOrError: Result<UserEmail> = UserEmail.create(request.email);
 
-    const passwordOrError: Result<UserPassword> = UserPassword.create({
+    const passwordOrError = UserPassword.create({
       password: request.password,
     });
 
-    const usernameOrError: Result<UserName> = UserName.create({
+    const usernameOrError = UserName.create({
       username: request.username,
     });
 
-    // needs refactor
-    const verifiedResult = Result.verifyResults<UserTypes>([
+    const verifiedResult = Result.verifyResults([
       emailOrError,
       passwordOrError,
       usernameOrError,
     ]);
 
     if (verifiedResult.isFailure) {
-      return left(Result.fail<UserTypes>(verifiedResult.error as string));
+      return left(
+        Result.fail<void>(verifiedResult.error),
+      ) as RegisterUserResponse;
     }
 
     const email: UserEmail = emailOrError.getValue();
@@ -61,14 +61,16 @@ export class RegisterUserUseCase
           new RegisterUserErrors.EmailAlreadyExistsError(email.props.email),
         );
       }
-      const userOrError: Result<User> = User.create({
+      const userOrError = User.create({
         email,
         password,
         username,
       });
 
       if (userOrError.isFailure) {
-        return left(Result.fail<User>(userOrError.error.toString()));
+        return left(
+          Result.fail<User>(userOrError.error.toString()),
+        ) as RegisterUserResponse;
       }
 
       const user: User = userOrError.getValue();

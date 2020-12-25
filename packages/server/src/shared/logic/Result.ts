@@ -41,7 +41,8 @@ export class Result<T> {
     return new Result<U>(false, error);
   }
 
-  public static verifyResults<U>(results: Result<U>[]): Result<U> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public static verifyResults(results: Result<any>[]): Result<any> {
     results.find(({ isFailure }) => isFailure === true);
 
     return Result.success();
