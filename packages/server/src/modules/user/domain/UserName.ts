@@ -1,7 +1,7 @@
-import { ValueObject } from '../../../shared/ValueObject';
-import { Result } from '../../../shared/logic/Result';
-import { Guard } from '../../../shared/logic/Guard';
-import { Validation } from '../../../shared/logic/Validation';
+import { ValueObject } from '../../../shared/domain/ValueObject';
+import { Result } from '../../../shared/Result';
+import { Guard } from '../../../shared/Guard';
+import { Validation } from '../../../shared/domain/Validation';
 
 type UserNameProps = {
   username: string;

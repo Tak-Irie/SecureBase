@@ -1,19 +1,24 @@
-import 'reflect-metadata';
-import 'dotenv';
-import express from 'express';
-import { createConnection } from 'typeorm';
 import { ApolloServer } from 'apollo-server-express';
+import express from 'express';
 import { buildSchema } from 'type-graphql';
-// import {resolvers} from "./graphql/resolvers"
-import { UserResolver } from './graphql/resolvers/UserResolver';
+import { Container } from 'typedi';
+import { createConnection, useContainer } from 'typeorm';
+
 import { User } from './graphql/entities/User';
+// import { UserResolver } from "./graphql/resolvers"
+import { UserResolver } from './graphql/resolvers/UserResolver';
+
+import 'dotenv';
+import 'reflect-metadata';
 
 const main = async () => {
   const app = express();
   const port = 4000;
 
+  useContainer(Container);
+
   //
-  const conn = await createConnection({
+  await createConnection({
     type: 'postgres',
     url:
       process.env.DB_HOST ||
@@ -26,13 +31,12 @@ const main = async () => {
       migrationsDir: '../migrations',
     },
   });
-  await conn.synchronize();
-
   const apolloSever = new ApolloServer({
     schema: await buildSchema({
       resolvers: [UserResolver],
       validate: false,
       dateScalarMode: 'isoDate',
+      container: Container,
       // authChecker:,
     }),
     context: ({ res, req }) => ({

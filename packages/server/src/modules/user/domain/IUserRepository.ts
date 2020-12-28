@@ -1,8 +1,9 @@
 import { User } from './User';
 import { UserEmail } from './UserEmail';
 
-export interface UserRepository {
+export interface IUserRepository {
   confirmExistence(userEmail: UserEmail): Promise<boolean>;
-  getUserByUserId(userId: string): Promise<User>;
+  getUserByUserId(userId: string): Promise<unknown | undefined>;
   registerUser(user: User): Promise<void>;
+  getUsers(): Promise<unknown[] | undefined>;
 }

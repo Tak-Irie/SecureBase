@@ -1,10 +1,8 @@
-import { UseCaseError } from '../../../../shared/logic/UseCaseError';
-import { Result } from '../../../../shared/logic/Result';
+import { Result } from '../../../../shared/Result';
+import { IUseCaseError } from '../../../../shared/useCase/IUseCaseError';
 
-export class EmailAlreadyExistsError extends Result<UseCaseError> {
-  constructor(email: string) {
-    super(false, {
-      message: `こちらのEmail"${email}"は既に登録されています`,
-    });
+export class EmailAlreadyExistsError extends Result<IUseCaseError> {
+  constructor(email: string, error?: Error) {
+    super(false, `こちらのEmail"${email}"は既に登録されています`, error);
   }
 }

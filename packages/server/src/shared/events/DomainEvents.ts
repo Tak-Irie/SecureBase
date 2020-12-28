@@ -1,6 +1,6 @@
 import { IDomainEvent } from './IDomainEvent';
-import { AggregateRoot } from '../AggregateRoot';
-import { UniqueEntityId } from '../UniqueEntityId';
+import { AggregateRoot } from '../domain/AggregateRoot';
+import { UniqueEntityId } from '../domain/UniqueEntityId';
 
 type callBack = (event: IDomainEvent) => void;
 

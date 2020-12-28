@@ -1,11 +1,11 @@
-import { AggregateRoot } from '../../../shared/AggregateRoot';
-import { UniqueEntityId } from '../../../shared/UniqueEntityId';
-import { Result } from '../../../shared/logic/Result';
-import { UserEmail } from './UserEmail';
-import { UserPassword } from './UserPassword';
-import { UserName } from './UserName';
+import { AggregateRoot } from '../../../shared/domain/AggregateRoot';
+import { Result } from '../../../shared/Result';
+import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 // eslint-disable-next-line import/no-cycle
 import { UserCreated } from './events/UserCreated';
+import { UserEmail } from './UserEmail';
+import { UserName } from './UserName';
+import { UserPassword } from './UserPassword';
 
 interface UserProps {
   id?: UniqueEntityId;

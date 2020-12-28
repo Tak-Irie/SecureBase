@@ -1,10 +1,15 @@
+/**
+ * @class throw new Error()をしないことで柔軟にエラーハンドリングするためのクラス
+ * もちろん正常値のValue取得にも使えるし、型安全なビジネスロジックを書ける。
+ * @method verifyResultsは複数の値オブジェクトを検査したい際に使用する。
+ */
 export class Result<T> {
   public isSuccess: boolean;
   public isFailure: boolean;
-  public error: T | string;
+  public readonly error: string;
   private _value: T;
 
-  public constructor(isSuccess: boolean, error?: T | string, value?: T) {
+  public constructor(isSuccess: boolean, error?: string, value?: T) {
     if (isSuccess && error) {
       throw new Error(
         'Invalid Operation Error: isSuccess and error is mutual exclusive',
@@ -29,8 +34,8 @@ export class Result<T> {
     return this._value;
   }
 
-  public errorValue(): T {
-    return this.error as T;
+  public errorValue(): string {
+    return this.error;
   }
 
   public static success<U>(value?: U): Result<U> {
@@ -41,10 +46,9 @@ export class Result<T> {
     return new Result<U>(false, error);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static verifyResults(results: Result<any>[]): Result<any> {
+  public static verifyResults<U>(results: Result<U>[]): Result<U> {
     results.find(({ isFailure }) => isFailure === true);
 
-    return Result.success();
+    return Result.success<U>();
   }
 }

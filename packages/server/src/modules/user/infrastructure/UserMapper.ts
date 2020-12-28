@@ -1,12 +1,16 @@
-import { UniqueEntityId } from '../../../shared/UniqueEntityId';
+import { User } from '../../../graphql/entities/User';
+import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 import { User as DomainUser } from '../domain/User';
-import { User as OrmUser } from '../../../graphql/entities/User';
+import { UserEmail } from '../domain/UserEmail';
 import { UserName } from '../domain/UserName';
 import { UserPassword } from '../domain/UserPassword';
-import { UserEmail } from '../domain/UserEmail';
 
 export class UserMapper {
-  public static toDomain(ormUser: OrmUser): DomainUser {
+  // public static toGraphQL(ormUser: User): User {
+  //   return ormUser;
+  // }
+
+  public static toDomain(ormUser: User): DomainUser {
     const userNameResult = UserName.create({ username: ormUser.username });
     const userPasswordResult = UserPassword.create({
       password: ormUser.password,
@@ -26,8 +30,8 @@ export class UserMapper {
 
   public static async toTypeOrm(
     user: DomainUser,
-  ): Promise<Omit<OrmUser, 'createdAt' | 'updatedAt'>> {
-    let hashedPassword: string;
+  ): Promise<Omit<User, 'createdAt' | 'updatedAt'>> {
+    let hashedPassword = '';
     if (!!user.password === true) {
       if (user.password.isAlreadyHashed()) {
         hashedPassword = user.password.props.password;
@@ -35,7 +39,6 @@ export class UserMapper {
         hashedPassword = await user.password.getHashedValue();
       }
     }
-    hashedPassword = user.password.props.password;
 
     return {
       id: user.id.getId(),

@@ -1,24 +1,29 @@
-import { left, right } from '../../../../shared/logic/Either';
-import { Result } from '../../../../shared/logic/Result';
-import { UnexpectedError } from '../../../../shared/logic/UnexpectedError';
-import { UseCase } from '../../../../shared/UseCase';
+/* eslint-disable */
+import { Either, left, right } from '../../../../shared/Either';
+import { Result } from '../../../../shared/Result';
+import { UnexpectedError } from '../../../../shared/UnexpectedError';
+import { IUseCase } from '../../../../shared/useCase/IUseCase';
 import { User } from '../../domain/User';
 import { UserEmail } from '../../domain/UserEmail';
 import { UserName } from '../../domain/UserName';
 import { UserPassword } from '../../domain/UserPassword';
-import { UserRepository } from '../../domain/UserRepository';
-import * as RegisterUserErrors from './RegisterUserErrors';
-import { RegisterUserResponse } from './RegisterUserResponse';
+import { IUserRepository } from '../../domain/IUserRepository';
+import { EmailAlreadyExistsError } from './RegisterUserErrors';
 
 type RegisterUserDTO = {
   username: string;
   email: string;
   password: string;
 };
+type RegisterUserResponse = Either<
+  EmailAlreadyExistsError | UnexpectedError,
+  Result<void>
+>;
+type UserTypes = UserEmail | UserName | UserPassword;
 
 export class RegisterUserUseCase
-  implements UseCase<RegisterUserDTO, Promise<RegisterUserResponse>> {
-  constructor(private userRepository: UserRepository) {
+  implements IUseCase<RegisterUserDTO, Promise<RegisterUserResponse>> {
+  constructor(private userRepository: IUserRepository) {
     this.userRepository = userRepository;
   }
 
@@ -35,16 +40,14 @@ export class RegisterUserUseCase
       username: request.username,
     });
 
-    const verifiedResult = Result.verifyResults([
+    const verifiedResult = Result.verifyResults<UserTypes>([
       emailOrError,
       passwordOrError,
       usernameOrError,
     ]);
-
+    // must refactor
     if (verifiedResult.isFailure) {
-      return left(
-        Result.fail<void>(verifiedResult.error),
-      ) as RegisterUserResponse;
+      return left(Result.fail<any>(verifiedResult.error));
     }
 
     const email: UserEmail = emailOrError.getValue();
@@ -57,9 +60,7 @@ export class RegisterUserUseCase
       );
 
       if (userEmailAlreadyRegistered) {
-        return left(
-          new RegisterUserErrors.EmailAlreadyExistsError(email.props.email),
-        );
+        return left(new EmailAlreadyExistsError(email.props.email));
       }
       const userOrError = User.create({
         email,
@@ -67,11 +68,8 @@ export class RegisterUserUseCase
         username,
       });
 
-      if (userOrError.isFailure) {
-        return left(
-          Result.fail<User>(userOrError.error.toString()),
-        ) as RegisterUserResponse;
-      }
+      if (userOrError.isFailure)
+        return left(Result.fail<any>(userOrError.error));
 
       const user: User = userOrError.getValue();
 

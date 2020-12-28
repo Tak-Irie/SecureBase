@@ -1,5 +1,5 @@
-import { Result } from '../../../shared/logic/Result';
-import { ValueObject } from '../../../shared/ValueObject';
+import { Result } from '../../../shared/Result';
+import { ValueObject } from '../../../shared/domain/ValueObject';
 
 export type UserEmailProps = {
   email: string;

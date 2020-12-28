@@ -1,4 +1,4 @@
-import { UniqueEntityId } from '../UniqueEntityId';
+import { UniqueEntityId } from '../domain/UniqueEntityId';
 
 export interface IDomainEvent {
   dateTimeOccurred: Date;

@@ -1,6 +1,6 @@
-import { IDomainEvent } from './events/IDomainEvent';
+import { IDomainEvent } from '../events/IDomainEvent';
 // eslint-disable-next-line import/no-cycle
-import { DomainEvents } from './events/DomainEvents';
+import { DomainEvents } from '../events/DomainEvents';
 import { UniqueEntityId } from './UniqueEntityId';
 import { Entity } from './Entity';
 

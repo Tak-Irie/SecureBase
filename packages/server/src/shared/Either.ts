@@ -1,5 +1,6 @@
 /**
- * left is errors, right is success
+ * ユースケースエラー及びレスポンスをハンドリングするクラス
+ * leftは異常系、rightは正常系
  */
 export type Either<L, A> = Left<L, A> | Right<L, A>;
 export class Left<L, A> {
