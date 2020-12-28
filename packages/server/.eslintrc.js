@@ -2,6 +2,7 @@ module.exports = {
   env: {
     es2020: true,
     node: true,
+    jest: true,
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -27,7 +28,6 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:prettier/recommended',
     'plugin:type-graphql/recommended',
     'prettier',
     'prettier/@typescript-eslint',

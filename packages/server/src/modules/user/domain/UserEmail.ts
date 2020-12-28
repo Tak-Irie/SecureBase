@@ -20,13 +20,13 @@ export class UserEmail extends ValueObject<UserEmailProps> {
     return email.trim().toLowerCase();
   }
 
-  public static create(email: string): Result<UserEmail> {
-    if (!this.isValidEmail(email)) {
+  public static create(email: UserEmailProps): Result<UserEmail> {
+    if (!this.isValidEmail(email.email)) {
       return Result.fail<UserEmail>('Email address not valid');
     }
 
     return Result.success<UserEmail>(
-      new UserEmail({ email: this.formatEmail(email) }),
+      new UserEmail({ email: this.formatEmail(email.email) }),
     );
   }
 }

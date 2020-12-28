@@ -30,7 +30,7 @@ export class RegisterUserUseCase
   public async execute(
     request: RegisterUserDTO,
   ): Promise<RegisterUserResponse> {
-    const emailOrError: Result<UserEmail> = UserEmail.create(request.email);
+    const emailOrError: Result<UserEmail> = UserEmail.create({email: request.email});
 
     const passwordOrError = UserPassword.create({
       password: request.password,
