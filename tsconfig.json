@@ -17,10 +17,5 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@server": ["./packages/server/src/*"],
-      "@web": ["./packages/web/src/*"]
-    },
   }
 }

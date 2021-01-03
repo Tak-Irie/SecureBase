@@ -46,7 +46,9 @@ export const Navbar: FC = () => {
             </ul>
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               <li className="flex items-center">
-                <Dropdown />
+                <Dropdown>
+                  <p>temp</p>
+                </Dropdown>
               </li>
               <li className="flex items-center">
                 <a

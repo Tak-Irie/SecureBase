@@ -38,10 +38,11 @@ const Form: FC = () => {
         //   });
         // },
       });
-      console.log(':', response);
-      if (response.data?.userRegister.user) {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        router.push('/');
+      if (response.data?.userRegister.message === 'registered!') {
+        await router.push('/');
+        console.log(':', response);
+      } else if (response.data?.userRegister.message !== 'registered!') {
+        console.log(':', response);
       }
     } catch (err) {
       console.log('register fail', err);
@@ -51,13 +52,18 @@ const Form: FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input label="username" type="text" register={register} />
-      <p>{errors.username?.message}</p>
+      <p className="inline-block uppercase text-red-500 text-xs font-bold italic">
+        {errors.username?.message}
+      </p>
       <Input label="email" type="email" register={register} />
-      <p>{errors.email?.message}</p>
+      <p className="inline-block uppercase text-red-500 text-xs font-bold italic">
+        {errors.email?.message}
+      </p>
       {errors.email && 'email is required'}
       <Input label="password" type="password" register={register} />
-      <p>{errors.password?.message}</p>
-
+      <p className="inline-block uppercase text-red-500 text-xs font-bold italic">
+        {errors.password?.message}
+      </p>
       <div>
         <label
           className="inline-flex items-center cursor-pointer"
@@ -79,18 +85,6 @@ const Form: FC = () => {
             </a>
           </span>
         </label>
-      </div>
-      <div className="text-center mt-6">
-        {/* <button
-          className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-          type="button"
-          onClick={() => {
-            const values = getValues();
-            console.log(':', values);
-          }}
-        >
-          getValues
-        </button> */}
       </div>
       <div className="text-center mt-6">
         <button
