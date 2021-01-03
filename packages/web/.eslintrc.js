@@ -46,6 +46,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'import/prefer-default-export': 'off',
     'class-methods-use-this': 0,
+    'jsx-a11y/anchor-is-valid': 0,
     'lines-between-class-members': [
       'error',
       'always',

@@ -8,7 +8,7 @@ const createApolloClient = () => {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
-      uri: process.env.APOLLO_LINK,
+      uri: "http://localhost:4000/graphql",
       credentials:"same-origin",
     }),
     cache: new InMemoryCache(),

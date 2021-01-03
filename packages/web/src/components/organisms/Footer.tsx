@@ -1,62 +1,151 @@
 import React, { FC } from 'react';
 
-const Footer: FC<{ absolute: true | null }> = ({ absolute = null }) => {
+export const Footer: FC = () => {
   return (
     <>
-      <footer
-        className={`${
-          absolute ? 'absolute w-full bottom-0 bg-gray-900' : 'relative'
-        } pb-6`}
-      >
+      <footer className="relative bg-red-300 pt-8 pb-6">
+        <div
+          className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
+          style={{ transform: 'translateZ(0)' }}
+        >
+          <svg
+            className="absolute bottom-0 overflow-hidden"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+            version="1.1"
+            viewBox="0 0 2560 100"
+            x="0"
+            y="0"
+          >
+            <polygon
+              className="text-gray-300 fill-current"
+              points="2560 0 2560 100 0 100"
+            />
+          </svg>
+        </div>
         <div className="container mx-auto px-4">
-          <hr className="mb-6 border-b-1 border-gray-700" />
-          <div className="flex flex-wrap items-center md:justify-between justify-center">
-            <div className="w-full md:w-4/12 px-4">
-              <div className="text-sm text-white font-semibold py-1">
-                Copyright © {new Date().getFullYear()}{' '}
-                <a
-                  href="https://www.creative-tim.com"
-                  className="text-white hover:text-gray-400 text-sm font-semibold py-1"
+          <div className="flex flex-wrap text-center lg:text-left">
+            <div className="w-full lg:w-6/12 px-4">
+              <h4 className="text-3xl font-semibold">Lets keep in touch!</h4>
+              <h5 className="text-lg mt-0 mb-2 text-gray-700">
+                Find us on any of these platforms, we respond 1-2 business days.
+              </h5>
+              <div className="mt-6 lg:mb-0 mb-6">
+                <button
+                  className="bg-white text-blue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  type="button"
                 >
-                  Creative Tim
-                </a>
+                  <i className="fab fa-twitter" />
+                </button>
+                <button
+                  className="bg-white text-blue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  type="button"
+                >
+                  <i className="fab fa-facebook-square" />
+                </button>
+                <button
+                  className="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  type="button"
+                >
+                  <i className="fab fa-dribbble" />
+                </button>
+                <button
+                  className="bg-white text-gray-900 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  type="button"
+                >
+                  <i className="fab fa-github" />
+                </button>
               </div>
             </div>
-            <div className="w-full md:w-8/12 px-4">
-              <ul className="flex flex-wrap list-none md:justify-end  justify-center">
-                <li>
-                  <a
-                    href="https://www.creative-tim.com"
-                    className="text-white hover:text-gray-400 text-sm font-semibold block py-1 px-3"
-                  >
-                    Creative Tim
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.creative-tim.com/presentation"
-                    className="text-white hover:text-gray-400 text-sm font-semibold block py-1 px-3"
-                  >
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="http://blog.creative-tim.com"
-                    className="text-white hover:text-gray-400 text-sm font-semibold block py-1 px-3"
-                  >
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/creativetimofficial/argon-design-system/blob/master/LICENSE.md"
-                    className="text-white hover:text-gray-400 text-sm font-semibold block py-1 px-3"
-                  >
-                    MIT License
-                  </a>
-                </li>
-              </ul>
+            <div className="w-full lg:w-6/12 px-4">
+              <div className="flex flex-wrap items-top mb-6">
+                <div className="w-full lg:w-4/12 px-4 ml-auto">
+                  <span className="block uppercase text-gray-600 text-sm font-semibold mb-2">
+                    Useful Links
+                  </span>
+                  <ul className="list-unstyled">
+                    <li>
+                      <a
+                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                        href="https://www.creative-tim.com/presentation?ref=nnjs-footer"
+                      >
+                        About Us
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                        href="https://blog.creative-tim.com?ref=nnjs-footer"
+                      >
+                        Blog
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                        href="https://www.github.com/creativetimofficial?ref=nnjs-footer"
+                      >
+                        Github
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                        href="https://www.creative-tim.com/bootstrap-themes/free?ref=nnjs-footer"
+                      >
+                        Free Products
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div className="w-full lg:w-4/12 px-4">
+                  <span className="block uppercase text-gray-600 text-sm font-semibold mb-2">
+                    Other Resources
+                  </span>
+                  <ul className="list-unstyled">
+                    <li>
+                      <a
+                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                        href="https://github.com/creativetimofficial/notus-nextjs/blob/master/LICENSE.md?ref=nnjs-footer"
+                      >
+                        MIT License
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                        href="https://creative-tim.com/terms?ref=nnjs-footer"
+                      >
+                        Terms & Conditions
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                        href="https://creative-tim.com/privacy?ref=nnjs-footer"
+                      >
+                        Privacy Policy
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                        href="https://creative-tim.com/contact-us?ref=nnjs-footer"
+                      >
+                        Contact Us
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr className="my-6 border-gray-400" />
+          <div className="flex flex-wrap items-center md:justify-between justify-center">
+            <div className="w-full md:w-4/12 px-4 mx-auto text-center">
+              <div className="text-sm text-gray-600 font-semibold py-1">
+                Copyright © 2020 くらしのあんぜんきち by Takashi Irie
+              </div>
             </div>
           </div>
         </div>
@@ -64,5 +153,3 @@ const Footer: FC<{ absolute: true | null }> = ({ absolute = null }) => {
     </>
   );
 };
-
-export default Footer;

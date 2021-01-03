@@ -10,7 +10,7 @@
     "dev": "nodemon dist/index.js",
     "start": "node dist/index.js",
     "start2": "ts-node src/index.ts",
-    "demon:ts": "nodemon --exec ts-node src/index.ts",
+    "nodemon": "nodemon --exec ts-node src/index.ts",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
   },
   "dependencies": {

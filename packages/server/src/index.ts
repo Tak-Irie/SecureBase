@@ -8,7 +8,6 @@ import { Container } from 'typedi';
 import { createConnection, useContainer } from 'typeorm';
 
 import { User } from './graphql/entities/User';
-// import { UserResolver } from "./graphql/resolvers"
 import { UserResolver } from './graphql/resolvers/UserResolver';
 
 
@@ -34,7 +33,7 @@ const main = async () => {
   });
     app.use(
     cors({
-      origin: "https://studio.apollographql.com",
+      origin: ["https://studio.apollographql.com","http://localhost:3000"],
       credentials: true,
     })
   );
@@ -54,13 +53,8 @@ const main = async () => {
 
   });
 
-  apolloSever.applyMiddleware({ app, cors: true });
+  apolloSever.applyMiddleware({ app, cors: false });
 
-//   app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "https://studio.apollographql.com"); // update to match the domain you will make the request from
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
 
   app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
