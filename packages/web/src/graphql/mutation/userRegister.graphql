@@ -1,0 +1,8 @@
+mutation UserRegister($userRegisterOptions: UserInput!) {
+  userRegister(options: $userRegisterOptions) {
+    message
+    user {
+      id
+    }
+  }
+}
