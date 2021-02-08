@@ -3,18 +3,21 @@ import dotenv from 'dotenv';
 import express from 'express';
 import session from "express-session"
 import cors from 'cors';
-import { ApolloServer } from 'apollo-server-express';
-import { buildSchema } from 'type-graphql';
-import { Container } from 'typedi';
-import { createConnection, useContainer } from 'typeorm';
 
-// import { auth,  } from 'express-openid-connect';
+import { ApolloServer } from 'apollo-server-express';
 import Keycloak from "keycloak-connect"
 import { KeycloakContext, KeycloakTypeDefs, KeycloakSchemaDirectives } from 'keycloak-connect-graphql';
 
-import { User } from './graphql/entities/User';
-import { UserResolver } from './graphql/resolvers/UserResolver';
+import { createConnection, useContainer } from 'typeorm';
+import { Container } from 'typedi';
+import { buildSchema } from 'type-graphql';
 
+// import entities from "./graphql/entities/index"
+import resolvers from "./graphql/resolvers/index"
+// import { User } from './graphql/entities/User';
+// import { UserResolver } from './graphql/resolvers/UserResolver';
+// import { TestResolver } from './graphql/resolvers/TestResolver';
+// import { TestEntity } from './graphql/entities/Test';
 
 
 const main = async () => {
@@ -24,15 +27,14 @@ const main = async () => {
 
   useContainer(Container);
 
-  //
   await createConnection({
     type: 'postgres',
     url:
-      process.env.DB_HOST ||
+      // process.env.DB_HOST ||
       'postgresql://postgres:postgres@localhost:5432/anysecure4',
     synchronize: true,
     logging: true,
-    entities: [User],
+    entities: ["./graphql/entities/*.ts"],
     migrations: ['../migrations/**/*/ts'],
     cli: {
       migrationsDir: '../migrations',
@@ -54,13 +56,10 @@ const main = async () => {
 
   const apolloSever = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers,
       validate: false,
       dateScalarMode: 'isoDate',
       container: Container,
-
-
-      // authChecker:,
     }),
     typeDefs: [KeycloakTypeDefs],
     schemaDirectives: KeycloakSchemaDirectives,
@@ -74,21 +73,6 @@ const main = async () => {
   });
 
   apolloSever.applyMiddleware({ app, cors: false });
-
-//   app.use(
-//   auth({
-//     authRequired:false,
-//     auth0Logout:true,
-//     issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
-//     baseURL: process.env.AUTH0_BASE_URL,
-//     clientID: process.env.AUTH0_CLIENT_ID,
-//     secret: process.env.AUTH0_SECRET,
-//   })
-// );
-
-// app.get("/", (req, res) => {
-//   res.send(req.oidc.isAuthenticated() as any? "logged in" : "logged out")
-// })
 
 
   app.listen(port, () => {
