@@ -1,0 +1,56 @@
+version: '3.8'
+services:
+  securebase-server:
+    build: .
+    container_name: server
+    volumes:
+      - ./packages/server:/src
+      - ./yarn.lock:/src/yarn.lock
+    ports:
+      - '4000:4000'
+    depends_on:
+      - postgres
+      # - dynamodb
+      - keycloak
+    environment:
+      - AWS_ACCESS_KEY_ID=''
+      - AWS_SECRET_ACCESS_KEY=''
+      - REGION='eu-west-1'
+  # dynamodb:
+  #   image: amazon/dynamodb-local:latest
+  #   container_name: dynamodb
+  #   ports:
+  #     - '8000:8000'
+  postgres:
+    image: postgres:11-alpine
+    ports:
+      - 5433:5432
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8 --locale=C
+      TZ: 'Asia/Tokyo'
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:12.0.1
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: test
+      DB_USER: test
+      DB_SCHEMA: public
+      DB_PASSWORD: test
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: password
+      KEYCLOAK_IMPORT: /tmp/test_issuer_realm.json
+    volumes:
+      - ./keycloak/test_issuer_realm.json:/tmp/test_issuer_realm.json
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres

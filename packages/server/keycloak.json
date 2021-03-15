@@ -1,0 +1,8 @@
+{
+  "realm": "securebase",
+  "bearer-only": true,
+  "auth-server-url": "http://localhost:8080/auth",
+  "ssl-required": "external",
+  "resource": "service-nodejs",
+  "confidential-port": "http://localhost:4000"
+}
